@@ -1,0 +1,21 @@
+<label for="{{name}}" style="width: 100%">
+  <i class="fa fa-question-circle" style="color: #223377; cursor: pointer"></i>
+
+  {{label}}:
+
+  <span class="pull-right badge"
+        [class.badge-success]="value.length <= maxLength"
+        [class.badge-error]="value.length > maxLength">
+    {{value.length}} / {{maxLength}}
+  </span>
+</label>
+
+<tag-input id="{{name}}" class="form-control" name="{{name}}"
+           [ngModel]="value"
+           [modelAsStrings]="true"
+           [separatorKeyCodes]="[9, 14, 32]"
+           [placeholder]="'Введите категории'"
+           [secondaryPlaceholder]="'Введите категории'"
+           (onAdd)="onValueAdded($event)"
+           (onRemove)="onValueRemoved($event)">
+</tag-input>

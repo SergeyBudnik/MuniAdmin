@@ -1,0 +1,12 @@
+<label for="{{name}}" style="width: 100%">
+  <i class="fa fa-question-circle"></i>
+
+  {{label}}:
+
+  <span class="pull-right badge"
+        [class.badge-danger]="!!value && value.length > maxLength"
+        [class.badge-success]="!value || value.length <= maxLength">
+    {{!!value ? value.length : 0}} / {{maxLength}}
+  </span>
+</label>
+<input id="{{name}}" name="{{name}}" class="form-control" [(ngModel)]="value" (keyup)="onValueChange($event.target.value)"/>

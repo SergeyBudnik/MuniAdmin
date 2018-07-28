@@ -1,0 +1,27 @@
+<div class="page">
+  <app-header [activeSection]="'REPORTS'"></app-header>
+
+  <div class="list-header-container">
+    <div class="list-header">
+    </div>
+  </div>
+
+  <div class="list-content">
+    <div class="page-loading" *ngIf="loadingInProgress">
+      <fa name="spinner" class="loading-sign" animation="spin"></fa>
+    </div>
+
+    <ng-container *ngIf="!loadingInProgress">
+      <div class="list-row-clickable" *ngFor="let report of reports" (click)="openReport(report)">
+        <div class="list-row-item" style="width: 10%; line-height: 80px">
+          <div class="report-icon">
+            <img style="width: 60px; height: 60px; margin-top: -25px;" src="{{'http://www.acropollis.com/app/ProdAshdod/reports/' + report.id + '/report.png'}}"/>
+          </div>
+        </div>
+        <div class="list-row-item" style="width: 80%; line-height: 80px;">
+          {{report.comment}}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

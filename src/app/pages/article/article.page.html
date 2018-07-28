@@ -1,0 +1,121 @@
+<div class="page">
+  <app-header></app-header>
+
+  <div class="page-elements">
+    <div class="page-left-menu"></div>
+
+    <div class="page-content-with-footer" *ngIf="!currentLanguage">
+      <div *ngIf="loadingInProgress" class="page-loading">
+        <fa name="spinner" class="loading-sign" animation="spin"></fa>
+      </div>
+
+      <form *ngIf="!loadingInProgress">
+        <h1>Редактирование статьи</h1>
+
+        <br>
+
+        <div app-form-date-field-control class="form-group"
+             [name]="'releaseDate'" [label]="'Дата релиза'"
+             [value]="article.releaseDate" (onChange)="article.releaseDate = $event"></div>
+
+        <div app-form-date-field-control class="form-group"
+             [name]="'expirationDate'" [label]="'Дата устаревания'"
+             [value]="article.expirationDate" (onChange)="article.expirationDate = $event"></div>
+
+        <div app-form-select-control class="form-group"
+             [name]="'type'" [label]="'Выберите тип'"
+             [value]="article.type"
+             [items]="getArticleTypeItems()"
+             [valid]="true" (onChange)="article.type = $event"></div>
+
+        <div app-form-select-control class="form-group"
+             [name]="'sendPush'" [label]="'Отправлять пуш'"
+             [value]="'' + article.sendPushOnRelease"
+             [items]="getSendPushItems()"
+             [valid]="true" (onChange)="onSendPushChanged($event)"></div>
+
+        <h4>Внешний вид</h4>
+
+        <br>
+
+        <div class="images-row">
+          <div app-form-image-field class="horizontal-item"
+               [id]="'image'" [label]="'Основное изображение'"
+               [controlWidth]="'300px'" [controlHeight]="'300px'"
+               [minImageWidth]="600" [minImageHeight]="600"
+               [aspectRatio]="1"
+               [image]="image"
+               (onChange)="croppedImage = $event">
+          </div>
+
+          <div app-form-image-field class="horizontal-item"
+               [id]="'listImage'" [label]="'Изображение из списка статей'"
+               [controlWidth]="'300px'" [controlHeight]="'300px'"
+               [minImageWidth]="600" [minImageHeight]="200"
+               [aspectRatio]="3"
+               [image]="listImage"
+               (onChange)="croppedListImage = $event">
+          </div>
+        </div>
+
+        <br>
+
+        <div app-text-field-control class="form-group"
+             [name]="'video'" [label]="'Видео'" [maxLength]="128"
+             [value]="article.video" (onChange)="article.video = $event"></div>
+
+        <br>
+
+        <h4>Локализация</h4>
+
+        <br>
+
+        <div *ngFor="let language of getLanguages()" class="translation-row">
+          Перевод на <b>{{getLanguageTranslation(language)}}</b>
+
+          <span class="pull-right clickable-text" (click)="deleteTranslation(language)">
+            Удалить
+          </span>
+
+          <span class="pull-right horizontal-item clickable-text" (click)="goToLocalization(language)">
+            Редактировать
+          </span>
+        </div>
+
+        <br>
+
+        <button class="pull-right btn btn-primary" data-toggle="modal" data-target=#addArticleTranslation>
+          Добавить перевод
+        </button>
+
+        <app-add-article-translation-popup (onChange)="addTranslation($event)"></app-add-article-translation-popup>
+      </form>
+    </div>
+
+    <div app-article-localization *ngIf="currentLanguage"
+         class="page-content-with-footer"
+         [article]="article"
+         [language]="currentLanguage"
+         (onClose)="closeTranslation()"></div>
+
+    <div class="page-right-menu"></div>
+  </div>
+
+  <div class="footer">
+    <button class="btn btn-danger pull-right" (click)="deleteArticle()">
+      <span class="horizontal-item">
+        Удалить
+      </span>
+
+      <fa *ngIf="actionInProgress" name="spinner" class="loading-sign" animation="spin"></fa>
+    </button>
+
+    <button class="btn btn-primary pull-right horizontal-item" (click)="saveArticle()">
+      <span class="horizontal-item">
+        Сохранить
+      </span>
+
+      <fa *ngIf="actionInProgress" name="spinner" class="loading-sign" animation="spin"></fa>
+    </button>
+  </div>
+</div>

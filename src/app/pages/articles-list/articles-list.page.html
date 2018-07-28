@@ -1,0 +1,122 @@
+<div class="page">
+  <app-header [activeSection]="'ARTICLES'"></app-header>
+
+  <div class="list-header-container">
+    <div class="list-header">
+      <div style="width: 10%">
+      </div>
+
+      <div style="width: 15%; padding-right: 20px">
+        <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+
+          <select class="form-control">
+            <option>Все статусы</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="width: 15%; padding-right: 20px">
+        <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+
+          <select class="form-control">
+            <option>Все типы</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="width: 50%; padding-right: 20px">
+        <div class="input-group">
+        <span class="input-group-addon">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+
+          <input class="form-control" placeholder="Заголовок">
+        </div>
+      </div>
+
+      <div style="width: 10%">
+        <button class="btn btn-primary pull-right" (click)="addNewArticle()">
+          Добавить
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-content">
+    <div class="page-loading" *ngIf="loadingInProgress">
+      <fa name="spinner" class="loading-sign" animation="spin"></fa>
+    </div>
+
+    <ng-container *ngIf="!loadingInProgress">
+      <div class="list-row-clickable" *ngFor="let article of articles" (click)="openArticle(article)">
+        <div class="list-row-item" style="width: 10%; line-height: 80px">
+          <div class="article-icon">
+            <img style="width: 60px; height: 60px; margin-top: -25px; border-radius: 30px" src="{{'http://www.acropollis.com/app/ProdAshdod/articles/icons/' + article.id + '/100x100.png'}}"/>
+          </div>
+        </div>
+        <div class="list-row-item" style="width: 15%; line-height: 80px;">
+          <div *ngIf="currentTime < article.releaseDate" class="released-label">
+            Will be released: {{article.releaseDate | date: 'dd.MM.yyyy'}}
+          </div>
+          <div *ngIf="currentTime > article.expirationDate">
+            <span class="status-expired-label">
+              {{article.expirationDate | date: 'dd.MM.yyyy'}}
+            </span>
+          </div>
+          <div *ngIf="article.releaseDate <= currentTime && currentTime <= article.expirationDate">
+            <span class="status-released-label">
+              {{article.releaseDate | date: 'dd.MM.yyyy'}}
+              -
+              {{article.expirationDate | date: 'dd.MM.yyyy'}}
+            </span>
+          </div>
+        </div>
+        <div class="list-row-item" style="width: 15%; line-height: 80px; padding-right: 20px">
+          <div *ngIf="article.type === 'NEWS'">
+            <span class="type-news-label">
+              Новость
+            </span>
+          </div>
+          <div *ngIf="article.type === 'EVENT'">
+            <span class="type-event-label">
+              Мероприятие
+            </span>
+          </div>
+          <div *ngIf="article.type === 'SURVEY'">
+            <span class="type-survey-label">
+              Опрос
+            </span>
+          </div>
+        </div>
+        <div class="list-row-item">
+          <div style="line-height: 20px; vertical-align: middle; line-height: 20px; display: inline-flex; flex-direction: column;">
+            <div *ngIf="article.translatedArticle.ENGLISH">
+              <div style="display: inline-block; width: 100px">
+                <b>Английский:</b>
+              </div>
+              {{article.translatedArticle.ENGLISH.title}}
+            </div>
+            <div *ngIf="article.translatedArticle.RUSSIAN">
+              <div style="display: inline-block; width: 100px">
+                <b>Русский:</b>
+              </div>
+              {{article.translatedArticle.RUSSIAN.title}}
+            </div>
+            <div *ngIf="article.translatedArticle.HEBREW">
+              <div style="display: inline-block; width: 100px">
+                <b>Иврит:</b>
+              </div>
+              {{article.translatedArticle.HEBREW.title}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

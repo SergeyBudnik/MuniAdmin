@@ -1,0 +1,9 @@
+<div class="form-group">
+  <label for="{{name}}">
+    <i class="fa fa-question-circle"></i>
+    {{label}}:
+  </label>
+
+  <my-date-picker id="{{name}}" [ngModel]="value" [options]="{dateFormat: 'dd.mm.yyyy'}" (dateChanged)="onValueChange($event)">
+  </my-date-picker>
+</div>

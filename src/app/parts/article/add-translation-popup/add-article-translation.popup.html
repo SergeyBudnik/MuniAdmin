@@ -1,0 +1,24 @@
+<app-modal-template [id]="'addArticleTranslation'" [title]="'Добавление перевода'" [modalVisible]="false">
+  <div class="modal-body">
+    <form>
+      <div app-form-select-control class="form-group"
+           [name]="'language'"
+           [label]="'Выберите язык'"
+           [items]="items"
+           [value]="value"
+           [valid]="true"
+           (onChange)="onValueChange($event)">
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" data-dismiss='modal'>
+      Закрыть
+    </button>
+
+    <button class="btn btn-primary" data-dismiss='modal' (click)="addLanguage()">
+      Добавить
+    </button>
+  </div>
+</app-modal-template>

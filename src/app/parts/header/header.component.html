@@ -1,0 +1,31 @@
+<div class="header">
+  <div style="width: 20%">
+    <span class="header-title">Munucipali Admin v2.0.0</span>
+  </div>
+
+  <div style="width: 60%">
+    <span (click)="navigate('/articles')"
+          [class.menu-element-active]="activeSection === 'ARTICLES'"
+          [class.menu-element-inactive]="activeSection !== 'ARTICLES'">
+
+      <i class="fa fa-newspaper-o menu-element-icon" aria-hidden="true"></i>
+
+      Статьи
+    </span>
+
+    <span (click)="navigate('/reports')"
+          [class.menu-element-active]="activeSection === 'REPORTS'"
+          [class.menu-element-inactive]="activeSection !== 'REPORTS'">
+
+      <i class="fa fa-newspaper-o menu-element-icon" aria-hidden="true"></i>
+
+      Репорты
+    </span>
+  </div>
+
+  <div style="width: 20%">
+    <button class="btn btn-primary pull-right header-logout-button" (click)="logOff()">
+      <span i18n="Exit">Выйти</span>
+    </button>
+  </div>
+</div>

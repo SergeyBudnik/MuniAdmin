@@ -1,0 +1,27 @@
+<label for="{{name}}" style="width: 100%">
+  <i class="fa fa-question-circle"></i>
+
+  {{label}}:
+
+  <span class="pull-right badge"
+        [class.badge-danger]="value.length > maxLength"
+        [class.badge-success]="value.length <= maxLength">
+    {{value.length}} / {{maxLength}}
+  </span>
+</label>
+
+<quill-editor name="{{name}}" [ngModel]="value" (onContentChanged)="onContentChanged($event.html)">
+  <div quill-editor-toolbar>
+    <span class="ql-formats">
+      <button class="ql-bold" [title]="'Bold'"></button>
+    </span>
+    <span class="ql-formats">
+      <select id="{{name}}" class="ql-align" [title]="'Aligment'">
+        <option selected></option>
+        <option value="center"></option>
+        <option value="right"></option>
+        <option value="justify"></option>
+      </select>
+    </span>
+  </div>
+</quill-editor>

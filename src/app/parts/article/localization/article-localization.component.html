@@ -1,0 +1,110 @@
+<form>
+  <h1>
+    <span class="clickable-text" (click)="closeTranslation()">Назад</span>
+
+    <span class="horizontal-item">Редактирование перевода</span>
+  </h1>
+
+  <br>
+
+  <div app-text-field-control class="form-group"
+       [name]="'title'" [label]="'Заголовок'" [maxLength]="128"
+       [value]="article.translatedArticle[language].title"
+       (onChange)="article.translatedArticle[language].title = $event"></div>
+
+  <div app-tag-field-control class="form-group"
+       [name]="'categories'" [label]="'Категории'" [maxLength]="3"
+       [value]="article.translatedArticle[language].categories"
+       (onChange)="article.translatedArticle[language].categories = $event"></div>
+
+  <div app-form-text-area-control class="form-group"
+       [name]="'description'" [label]="'Описание'" [maxLength]="4096"
+       [value]="article.translatedArticle[language].description"
+       (onChange)="article.translatedArticle[language].description = $event"></div>
+
+  <div app-rich-text-field-control class="form-group"
+       [name]="'text'" [label]="'Текст'" [maxLength]="4096"
+       [value]="article.translatedArticle[language].text"
+       (onChange)="article.translatedArticle[language].text = $event"></div>
+
+  <ul class="nav nav-tabs">
+    <li class="add-question pull-right" (click)="addQuestion()">
+      Добавить вопрос
+    </li>
+
+    <li *ngFor="let question of getQuestions(); let i = index"
+        class="tab"
+        [class.current-tab]="currentQuestionIndex === i"
+        (click)="setCurrentQuestion(i)">
+      Вопрос {{i}}
+      <span style="margin-left: 10px" (click)="removeQuestion(i)">
+        <i class="fa fa-times" aria-hidden="true" style="color: red"></i>
+      </span>
+    </li>
+  </ul>
+
+  <br>
+
+  <div *ngFor="let question of getQuestions(); let i = index">
+    <ng-container *ngIf="currentQuestionIndex === i">
+      <div app-text-field-control class="form-group"
+           [name]="'questionText'" [label]="'Текст вопроса'" [maxLength]="128"
+           [value]="getTranslatedQuestion(question).text"
+           (onChange)="getTranslatedQuestion(question).text = $event"></div>
+
+      <div app-form-select-control class="form-group"
+           [name]="'answerType'" [label]="'Тип вопроса'"
+           [items]="getAnswerTypes()"
+           [value]="question.answerType"
+           (onChange)="onAnswerTypeChange(question, $event)"></div>
+
+      <div app-form-select-control class="form-group"
+           [name]="'showResults'" [label]="'Показывать результат'"
+           [value]="'' + question.showResult"
+           [items]="getShowResultItems()"
+           [valid]="true" (onChange)="onShowResultChanged(question, $event)"></div>
+
+      <ng-container *ngIf="question.answerType === 'FIVE_POINTS'">
+        <div app-text-field-control class="form-group"
+             [name]="'answerText50'" [label]="'Негативный ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[0]).text"
+             (onChange)="getTranslatedAnswer(question.answers[0]).text = $event"></div>
+
+        <div app-text-field-control class="form-group"
+             [name]="'answerText54'" [label]="'Позитивный ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[4]).text"
+             (onChange)="getTranslatedAnswer(question.answers[4]).text = $event"></div>
+      </ng-container>
+
+      <ng-container *ngIf="question.answerType === 'THREE_VARIANTS'">
+        <div app-text-field-control class="form-group"
+             [name]="'answerText30'" [label]="'Первый ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[0]).text"
+             (onChange)="getTranslatedAnswer(question.answers[0]).text = $event"></div>
+
+        <div app-text-field-control class="form-group"
+             [name]="'answerText31'" [label]="'Второй ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[1]).text"
+             (onChange)="getTranslatedAnswer(question.answers[1]).text = $event"></div>
+
+        <div app-text-field-control class="form-group"
+             [name]="'answerText32'" [label]="'Третий ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[2]).text"
+             (onChange)="getTranslatedAnswer(question.answers[2]).text = $event"></div>
+      </ng-container>
+
+      <ng-container *ngIf="question.answerType === 'DYCHOTOMOUS'">
+        <div app-text-field-control class="form-group"
+             [name]="'answerText20'" [label]="'Негативный ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[0]).text"
+             (onChange)="getTranslatedAnswer(question.answers[0]).text = $event"></div>
+
+        <div app-text-field-control class="form-group"
+             [name]="'answerText21'" [label]="'Позитивный ответ'" [maxLength]="128"
+             [value]="getTranslatedAnswer(question.answers[1]).text"
+             (onChange)="getTranslatedAnswer(question.answers[1]).text = $event"></div>
+      </ng-container>
+    </ng-container>
+  </div>
+
+</form>

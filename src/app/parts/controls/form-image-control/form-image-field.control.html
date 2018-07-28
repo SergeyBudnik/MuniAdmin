@@ -1,0 +1,40 @@
+<div class="form-image-field-label">
+  <i class="fa fa-question-circle"></i> {{label}}:
+</div>
+
+<image-cropper class="form-image-field-image"
+    [style.minWidth]="controlWidth"
+    [style.minHeight]="controlHeight"
+    [style.maxWidth]="controlWidth"
+    [style.maxHeight]="controlHeight"
+    [imageChangedEvent]="imageChangedEvent"
+    [imageBase64]="image"
+    [aspectRatio]="aspectRatio"
+    [maintainAspectRatio]="true"
+    [cropper]="newCropper"
+    [resizeToWidth]="minImageWidth"
+    (imageCropped)="onImageCropped($event)">
+</image-cropper>
+
+<label class="custom-file-upload" [style.min-width]="controlWidth">
+  <input type="file" (change)="onImageUploaded($event)"/>
+  Загрузить
+</label>
+
+<button #imageValidationTrigger class="invisible" data-toggle="modal" [attr.data-target]="'#' + id + 'ImageValidation'"></button>
+
+<app-modal-template [id]="id + 'ImageValidation'" [title]="'Ошибка валидации'" [modalVisible]="validationModalVisible">
+  <div class="modal-body">
+    Изображение должно быть не меньше
+    <b>{{minImageWidth}}</b>
+    x
+    <b>{{minImageHeight}}</b>
+    пикселей
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss='modal'>
+      Закрыть
+    </button>
+  </div>
+</app-modal-template>

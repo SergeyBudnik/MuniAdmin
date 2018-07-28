@@ -1,0 +1,31 @@
+<div class="page">
+  <app-header></app-header>
+
+  <div class="page-elements">
+    <div class="page-left-menu"></div>
+
+    <div class="page-content">
+      <div *ngIf="loadingInProgress" class="page-loading">
+        <fa name="spinner" class="loading-sign" animation="spin"></fa>
+      </div>
+
+      <form *ngIf="!loadingInProgress">
+        <h1>Репорт</h1>
+
+        <br>
+
+        <div class="report-image-container">
+          <img class="report-image" src="{{'http://www.acropollis.com/app/ProdAshdod/reports/' + report.id + '/report.png'}}"/>
+        </div>
+
+        <br>
+
+        <div app-form-text-area-control class="form-group"
+             [name]="'reportComment'" [label]="'Комментарий'" [maxLength]="128"
+             [value]="report.comment"></div>
+      </form>
+    </div>
+
+    <div class="page-right-menu"></div>
+  </div>
+</div>
